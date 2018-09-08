@@ -77,7 +77,7 @@ class RecHitCalibration:
         # https://github.com/cms-sw/cmssw/blob/CMSSW_9_3_X/RecoLocalCalo/HGCalRecProducers/python/HGCalUncalibRecHit_cfi.py#L25
         # We are going with the mean now. 
         #self.fCPerMIP = (1.25, 2.57, 3.88)  # 100um, 200um, 300um
-        fCPerMIP = (2.06,3.43,5.15) #120um, 200um, 300um
+        self.fCPerMIP = (2.06,3.43,5.15) #120um, 200um, 300um
 
         # https://github.com/cms-sw/cmssw/blob/CMSSW_9_3_X/SimCalorimetry/HGCalSimProducers/python/hgcalDigitizer_cfi.py#L127
         self.noise_MIP = 1.0/7.0 #expectation based on latest SiPM performance
