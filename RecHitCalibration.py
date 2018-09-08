@@ -8,62 +8,65 @@ class RecHitCalibration:
     def __init__(self):
         """set variables used in the functions"""
         # https://github.com/cms-sw/cmssw/blob/CMSSW_9_3_X/RecoLocalCalo/HGCalRecProducers/python/HGCalRecHit_cfi.py#L5
+        # Latest by dEdxWeights.ipynb
         self.dEdX_weights = (0.0,   # there is no layer zero
-                             8.603,  # Mev
-                             8.0675,
-                             8.0675,
-                             8.0675,
-                             8.0675,
-                             8.0675,
-                             8.0675,
-                             8.0675,
-                             8.0675,
-                             8.9515,
-                             10.135,
-                             10.135,
-                             10.135,
-                             10.135,
-                             10.135,
-                             10.135,
-                             10.135,
-                             10.135,
-                             10.135,
-                             11.682,
-                             13.654,
-                             13.654,
-                             13.654,
-                             13.654,
-                             13.654,
-                             13.654,
-                             13.654,
-                             38.2005,
-                             55.0265,
-                             49.871,
-                             49.871,
-                             49.871,
-                             49.871,
-                             49.871,
-                             49.871,
-                             49.871,
-                             49.871,
-                             49.871,
-                             49.871,
-                             62.005,
-                             83.1675,
-                             92.196,
-                             92.196,
-                             92.196,
-                             92.196,
-                             92.196,
-                             92.196,
-                             92.196,
-                             92.196,
-                             92.196,
-                             92.196,
-                             46.098)
+                             8.366557,   # Mev
+                             10.425456,  
+                             10.425456,  
+                             10.425456,  
+                             10.425456,  
+                             10.425456,  
+                             10.425456,  
+                             10.425456,  
+                             10.425456,  
+                             10.425456,  
+                             10.425456,  
+                             10.425456,  
+                             10.425456,  
+                             10.425456,  
+                             10.425456,  
+                             10.425456,  
+                             10.425456,  
+                             10.425456,  
+                             10.425456,  
+                             10.425456,  
+                             10.425456,  
+                             10.425456,  
+                             10.425456,  
+                             10.425456,  
+                             10.425456,  
+                             10.425456,  
+                             10.425456,  
+                             31.497849,  
+                             51.205434,  
+                             52.030486,  
+                             52.030486,  
+                             52.030486,  
+                             52.030486,  
+                             52.030486,  
+                             52.030486,  
+                             52.030486,  
+                             52.030486,  
+                             52.030486,  
+                             52.030486,  
+                             71.265149,  
+                             90.499812,  
+                             90.894274,  
+                             90.537470,  
+                             89.786205,  
+                             89.786205,  
+                             89.786205,  
+                             89.786205,  
+                             89.786205,  
+                             89.786205,  
+                             89.786205,  
+                             89.786205,  
+                             89.786205)
 
         # https://github.com/cms-sw/cmssw/blob/CMSSW_9_3_X/RecoLocalCalo/HGCalRecProducers/python/HGCalRecHit_cfi.py#L86
-        self.thicknessCorrection = (1.132,1.092,1.084)  # 100, 200, 300 um
+        # Since we are calibrating first we put 1's. 
+        #self.thicknessCorrection = (1.132,1.092,1.084)  # 100, 200, 300 um
+        self.thicknessCorrection = (1.,1.,1.)  # 120, 200, 300 um
 
         # Base configurations for HGCal digitizers
         # https://github.com/cms-sw/cmssw/blob/CMSSW_9_3_X/SimCalorimetry/HGCalSimProducers/python/hgcalDigitizer_cfi.py#L5
@@ -72,7 +75,9 @@ class RecHitCalibration:
         self.nonAgedNoises = (2100.0, 2100.0, 1600.0)  # 100,200,300 um (in electrons)
 
         # https://github.com/cms-sw/cmssw/blob/CMSSW_9_3_X/RecoLocalCalo/HGCalRecProducers/python/HGCalUncalibRecHit_cfi.py#L25
-        self.fCPerMIP = (1.25, 2.57, 3.88)  # 100um, 200um, 300um
+        # We are going with the mean now. 
+        #self.fCPerMIP = (1.25, 2.57, 3.88)  # 100um, 200um, 300um
+        fCPerMIP = (2.06,3.43,5.15) #120um, 200um, 300um
 
         # https://github.com/cms-sw/cmssw/blob/CMSSW_9_3_X/SimCalorimetry/HGCalSimProducers/python/hgcalDigitizer_cfi.py#L127
         self.noise_MIP = 1.0/7.0 #expectation based on latest SiPM performance
