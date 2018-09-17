@@ -652,20 +652,25 @@ def recHitAboveThreshold(rHit, ecut, dependSensor=True, usePandas=False):
       layer = rHit.layer()
       thickness = rHit.thickness()
       energy = rHit.energy()
-    
+    forscint = -1     
     if(dependSensor):
         thickIndex = -1
         
         if(layer <= HGCalImagingAlgo.lastLayerFH):  # EE + FH
-            if(thickness > 99. and thickness < 101.):     thickIndex = 0
+            print ("RecHit Thickness ", thickness)
+            if(thickness > 119. and thickness < 121.):     thickIndex = 0
             elif(thickness > 199. and thickness < 201.):  thickIndex = 1
             elif(thickness > 299. and thickness < 301.):  thickIndex = 2
-            else: print("ERROR - silicon thickness has a nonsensical value")
+            else: 
+              print("ERROR - silicon thickness has a nonsensical value") # will correct scinti below
+              forscint = 1
         # determine noise for each sensor/subdetector using RecHitCalibration library
 
         RecHitCalib = RecHitCalibration()
         sigmaNoise = 0.001 * RecHitCalib.sigmaNoiseMeV(layer, thickIndex)  # returns threshold for EE, FH, BH (in case of BH thickIndex does not play a role)
+        if forscint == 1: sigmaNoise = 0.001 * RecHitCalib.sigmaNoiseMeV(40, 2) #horrible hack
     aboveThreshold = energy >= ecut * sigmaNoise  # this checks if rechit energy is above the threshold of ecut (times the sigma noise for the sensor, if that option is set)
+    #print ("Erechit ", energy, " sigmaNoise ",  sigmaNoise ," threshold ecut * sigmanoise ", ecut * sigmaNoise )
     return sigmaNoise, aboveThreshold
 
 
