@@ -116,7 +116,7 @@ class HGCalImagingAlgo:
     # detector layers to consider
     lastLayerEE = 28  # last layer of EE
     lastLayerFH = 40  # last layer of FH
-    maxlayer = 52  # last layer of BH
+    maxlayer = 50  # last layer of BH
 
     def __init__(self, ecut=None, deltac=None, multiclusterRadii=None, minClusters=None, dependSensor=None, verbosityLevel=None):
         # sensor dependance or not
@@ -652,23 +652,23 @@ def recHitAboveThreshold(rHit, ecut, dependSensor=True, usePandas=False):
       layer = rHit.layer()
       thickness = rHit.thickness()
       energy = rHit.energy()
+
     forscint = -1     
     if(dependSensor):
         thickIndex = -1
-        
-        if(layer <= HGCalImagingAlgo.lastLayerFH):  # EE + FH
-            print ("RecHit Thickness ", thickness)
-            if(thickness > 119. and thickness < 121.):     thickIndex = 0
-            elif(thickness > 199. and thickness < 201.):  thickIndex = 1
-            elif(thickness > 299. and thickness < 301.):  thickIndex = 2
-            else: 
-              print("ERROR - silicon thickness has a nonsensical value") # will correct scinti below
-              forscint = 1
+        #print ("RecHit Thickness ", thickness)
+        if(thickness > 119. and thickness < 121.):    thickIndex = 0
+        elif(thickness > 199. and thickness < 201.):  thickIndex = 1
+        elif(thickness > 299. and thickness < 301.):  thickIndex = 2
+        else: 
+          #print("ERROR - silicon thickness has a nonsensical value") # will correct scinti below
+          forscint = 1
+          thickIndex = 3
         # determine noise for each sensor/subdetector using RecHitCalibration library
 
         RecHitCalib = RecHitCalibration()
-        sigmaNoise = 0.001 * RecHitCalib.sigmaNoiseMeV(layer, thickIndex)  # returns threshold for EE, FH, BH (in case of BH thickIndex does not play a role)
-        if forscint == 1: sigmaNoise = 0.001 * RecHitCalib.sigmaNoiseMeV(40, 2) #horrible hack
+        sigmaNoise = 0.001 * RecHitCalib.sigmaNoiseMeV(layer, thickIndex)  # returns threshold for EE, FH, BH (in case of BH thickIndex is set to 3 to distinguish the noise value)
+        #if forscint == 1: sigmaNoise = 0.001 * RecHitCalib.sigmaNoiseMeV(40, 2) #horrible hack
     aboveThreshold = energy >= ecut * sigmaNoise  # this checks if rechit energy is above the threshold of ecut (times the sigma noise for the sensor, if that option is set)
     #print ("Erechit ", energy, " sigmaNoise ",  sigmaNoise ," threshold ecut * sigmanoise ", ecut * sigmaNoise )
     return sigmaNoise, aboveThreshold

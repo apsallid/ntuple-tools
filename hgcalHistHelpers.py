@@ -50,6 +50,7 @@ def histValues2D(fValues, histDict, tag="hist2D_", title="hist 2D", axunit="a.u.
             histDict[tag].Fill(valueX, valueY)
     else:
         for (valueX, valueY, valueZ) in fValues:
+            print (valueX, valueY, valueZ)
             histDict[tag].Fill(valueX, valueY, valueZ)
     return histDict
 
