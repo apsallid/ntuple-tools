@@ -2,7 +2,7 @@
 
 #cd /afs/cern.ch/work/a/apsallid/CMS/PFCalStudies/CMS-HGCAL/calib/CMSSW_10_3_0_pre4/src
 #cd /afs/cern.ch/work/a/apsallid/CMS/PFCalStudies/CMS-HGCAL/calib/CMSSW_10_3_0_pre5/src
-cd /afs/cern.ch/work/a/apsallid/CMS/PFCalStudies/CMS-HGCAL/hitcalibrationV11/fcpermip/CMSSW_11_0_X_2019-09-04-2300/src
+cd /afs/cern.ch/work/a/apsallid/CMS/PFCalStudies/CMS-HGCAL/hitcalibrationV11/fcpermip/CMSSW_11_0_X_2019-09-23-2300/src
 eval `scramv1 runtime -csh`
 cd -
 
@@ -16,7 +16,10 @@ setenv MODE "True"
 
 # Thicknesses we are shooting
 #setenv thicknesses "eta1p6 eta2p0 eta2p5" # 300, 200, 120 
-setenv thicknesses "CE_E_Front_120um CE_E_Front_200um CE_E_Front_300um CE_H_Coarse_300um CE_H_Coarse_Scint CE_H_Fine_120um CE_H_Fine_200um CE_H_Fine_300um"
+#setenv thicknesses "CE_E_Front_120um CE_E_Front_200um CE_E_Front_300um CE_H_Coarse_300um CE_H_Coarse_Scint CE_H_Fine_120um CE_H_Fine_200um CE_H_Fine_300um"
+#setenv thicknesses "CE_H_Coarse_Scint"
+setenv thicknesses "CE_H_Fine_Scint"
+#setenv thicknesses "CE_E_Front_300um CE_H_Coarse_300um CE_H_Coarse_Scint CE_H_Fine_120um"
 #setenv thicknesses "CE_E_Front_120um CE_E_Front_200um"
 #setenv thicknesses "Scint_R180_Z430 Scint_R80_Z430"
 #setenv thicknesses "Scint_R80_Z430"
@@ -53,7 +56,7 @@ if ( ${thick} == "eta2p5" || ${thick} == "CE_E_Front_120um"  || ${thick} == "CE_
 setenv thicknum "120"
 endif
 
-if ( ${thick} == "CE_H_Coarse_Scint"  ) then
+if ( ${thick} == "CE_H_Coarse_Scint" || ${thick} == "CE_H_Fine_Scint" ) then
 setenv thicknum "-1"
 endif
 

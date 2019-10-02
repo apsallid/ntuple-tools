@@ -357,7 +357,7 @@ def main():
 	eratioboundaries = [0.90 , 1.5]
     if options.region in ["CE_E_Front_120um","eta2p5"]: 
         eratioboundaries = [0.8 , 1.3]#[0.85 , 1.15]#[0.6 , 0.9][0.85 , 1.15]
-    if options.region in ["CE_H_Coarse_Scint"]: 
+    if options.region in ["CE_H_Coarse_Scint","CE_H_Fine_Scint"]: 
         eratioboundaries = [0.45 , 0.95]#[0.85 , 1.15]#[0.6 , 1.0]
 
     print (eratioboundaries)

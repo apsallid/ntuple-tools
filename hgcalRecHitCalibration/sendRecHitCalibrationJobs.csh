@@ -2,8 +2,12 @@
 
 # Thicknesses we are shooting
 #setenv thicknesses "eta1p6 eta2p0 eta2p5" # 300, 200, 120 
-setenv thicknesses "CE_E_Front_120um CE_E_Front_200um CE_E_Front_300um CE_H_Coarse_300um CE_H_Coarse_Scint CE_H_Fine_120um CE_H_Fine_200um CE_H_Fine_300um"
+#setenv thicknesses "CE_E_Front_120um CE_E_Front_200um CE_E_Front_300um CE_H_Coarse_300um CE_H_Coarse_Scint CE_H_Fine_120um CE_H_Fine_200um CE_H_Fine_300um"
 #setenv thicknesses "CE_E_Front_300um CE_H_Coarse_300um CE_H_Coarse_Scint CE_H_Fine_120um CE_H_Fine_200um CE_H_Fine_300um"
+#setenv thicknesses "CE_E_Front_300um CE_H_Coarse_300um CE_H_Coarse_Scint CE_H_Fine_120um"
+#setenv thicknesses "CE_H_Coarse_Scint"
+setenv thicknesses "CE_H_Fine_Scint"
+#setenv thicknesses "CE_H_Fine_200um CE_H_Fine_300um"
 #setenv thicknesses "CE_E_Front_120um CE_E_Front_200um"
 #setenv thicknesses "eta1p6 eta2p0"
 #setenv thicknesses "eta2p0"

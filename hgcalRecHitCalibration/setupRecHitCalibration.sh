@@ -16,7 +16,7 @@ THESECONDSTAGECHOICE=${11}
 echo "System: "
 uname -a
 
-cd /afs/cern.ch/work/a/apsallid/CMS/PFCalStudies/CMS-HGCAL/hitcalibrationV11/fcpermip/CMSSW_11_0_X_2019-09-04-2300/src
+cd /afs/cern.ch/work/a/apsallid/CMS/PFCalStudies/CMS-HGCAL/hitcalibrationV11/fcpermip/CMSSW_11_0_X_2019-09-23-2300/src
 eval `scramv1 runtime -sh`
 cd -
 
@@ -28,7 +28,7 @@ export PWD=`pwd`
 export eospath="/eos/cms/store/user/apsallid/HGCal/Validation/Photons"
 export targetdirs="CloseByParticleGunProducer_apsallid_PDGId22_nPart1_E60_eta1p4to4p0"
 #The delta 2.5 is dummy. We do not shoot two particles. 
-export date="Delta_2p5_20190905"
+export date="Delta_2p5_20190924"
 
 export eosmainpath="${eospath}/${targetdirs}_${THETHICKNESS}_${date}/NTUP"
 #export eosmainpath="${eospath}/${targetdirs}_${THETHICKNESS}_${date}/NTUP_THICKNESS1"
