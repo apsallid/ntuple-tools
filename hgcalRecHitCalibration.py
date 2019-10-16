@@ -357,8 +357,8 @@ def main():
 	eratioboundaries = [0.90 , 1.5]
     if options.region in ["CE_E_Front_120um","eta2p5"]: 
         eratioboundaries = [0.8 , 1.3]#[0.85 , 1.15]#[0.6 , 0.9][0.85 , 1.15]
-    if options.region in ["CE_H_Coarse_Scint","CE_H_Fine_Scint"]: 
-        eratioboundaries = [0.45 , 0.95]#[0.85 , 1.15]#[0.6 , 1.0]
+    if options.region in ["CE_H_Coarse_Scint","CE_H_Fine_Scint","CE_H_Fine_Scint_Var1","CE_H_Fine_Scint_Var2","CE_H_Coarse_Scint_Var1","CE_H_Coarse_Scint_Var2"]: 
+        eratioboundaries = [0.45 , 1.50]#[0.45 , 0.95]#[0.85 , 1.15]#[0.6 , 1.0]
 
     print (eratioboundaries)
     if options.calcthickfactors == "False":
@@ -386,6 +386,10 @@ def main():
         rHitthick200 = []
         rHitthick300 = []
         rHitthickScint = []
+        #For the fine fraction plot: "fine fraction" is the fraction of the rechit energy found in the four layers of CE-H-Fine 
+        #i.e. "fine fraction" = Sum(E_i)_fine/Sum(E_i) versus Sum(E_i)/E_gen
+        rHitsSimAssocSumE_fineoverSumE_vs_SumEoverEgen = []
+        UnmatchedrHitsSimAssocSumE_fineoverSumE_vs_SumEoverEgen = []
 
         # start event loop
         for event in ntuple:
@@ -442,6 +446,10 @@ def main():
             # shooting also anti-particle
             rHitsSimAssocEp = [] # eta > 0
             rHitsSimAssocEm = [] # eta <= 0
+            #For the fine fraction plot
+            rHitsSimAssocEp_fine = [] # eta > 0
+            rHitsSimAssocEm_fine = [] # eta <= 0
+            
             for simClusIndex in range(0,len(rHitsSimAssoc)):
                 # loop over assoc. rec hits
                 for thisHit in rHitsSimAssoc[simClusIndex]:
@@ -493,16 +501,27 @@ def main():
                     if thisHit.eta() > 0.: rHitsSimAssocEp.append(thecurhitenergy)
                     elif thisHit.eta() <= 0.: rHitsSimAssocEm.append(thecurhitenergy)
                     else: print("You shouldn't be here.")
+
+                    if thisHit.eta() > 0. and thisHit.layer() >= 37. and thisHit.layer() <= 40.: 
+                        rHitsSimAssocEp_fine.append(thecurhitenergy)
+                    if thisHit.eta() <= 0. and thisHit.layer() >= 37. and thisHit.layer() <= 40.: 
+                        rHitsSimAssocEm_fine.append(thecurhitenergy)
                     #------------------------------------------------------------------
 
             #The sum of all rechits energies of the event that are associated to simclusters
             eventrHitsSimAssocSumEp = np.asarray(rHitsSimAssocEp).sum()
             eventrHitsSimAssocSumEm = np.asarray(rHitsSimAssocEm).sum()
+            #Same for fine
+            eventrHitsSimAssocSumEp_fine = np.asarray(rHitsSimAssocEp_fine).sum()
+            eventrHitsSimAssocSumEm_fine = np.asarray(rHitsSimAssocEm_fine).sum()
+            
     
             #===================================================================================================================
             #The sum of all rechits energies of the event that are NOT associated to simclusters
             UnmatchedrHitsEp = [] # eta > 0
             UnmatchedrHitsEm = [] # eta <= 0
+            UnmatchedrHitsEp_fine = [] # eta > 0
+            UnmatchedrHitsEm_fine = [] # eta <= 0
             for simClusIndex in range(0,len(UnmatchedrHits)):
                 # loop over unmatched rec hits
                 for thisHit in UnmatchedrHits[simClusIndex]:
@@ -512,10 +531,17 @@ def main():
                     elif thisHit.eta() <= 0.: UnmatchedrHitsEm.append(thisHit.energy())
                     else: print("You shouldn't be here.")
                     #------------------------------------------------------------------
+                    if thisHit.eta() > 0. and thisHit.layer() >= 37. and thisHit.layer() <= 40.: 
+                        UnmatchedrHitsEp_fine.append(thecurhitenergy)
+                    if thisHit.eta() <= 0. and thisHit.layer() >= 37. and thisHit.layer() <= 40.: 
+                        UnmatchedrHitsEm_fine.append(thecurhitenergy)
  
             #The sum of all rechits energies of the event that are NOT associated to simclusters
             eventUnmatchedrHitsSumEp = np.asarray(UnmatchedrHitsEp).sum()
             eventUnmatchedrHitsSumEm = np.asarray(UnmatchedrHitsEm).sum()
+            #Same for fine
+            eventUnmatchedrHitsSumEp_fine = np.asarray(UnmatchedrHitsEp_fine).sum()
+            eventUnmatchedrHitsSumEm_fine = np.asarray(UnmatchedrHitsEm_fine).sum()
 
             #===================================================================================================================
 
@@ -527,13 +553,23 @@ def main():
   
             if options.shootoneside: Egenp = GenEforoneshootside
             rHitsSimAssocSumEoverEgen.append( eventrHitsSimAssocSumEp / Egenp )
-            if not options.shootoneside: rHitsSimAssocSumEoverEgen.append( eventrHitsSimAssocSumEm / Egenm )
+            rHitsSimAssocSumE_fineoverSumE_vs_SumEoverEgen.append( (eventrHitsSimAssocSumEp / Egenp , eventrHitsSimAssocSumEp_fine / eventrHitsSimAssocSumEp) )  
+
+            if not options.shootoneside: 
+                rHitsSimAssocSumEoverEgen.append( eventrHitsSimAssocSumEm / Egenm )
+                rHitsSimAssocSumE_fineoverSumE_vs_SumEoverEgen.append( (eventrHitsSimAssocSumEm / Egenm , eventrHitsSimAssocSumEm_fine / eventrHitsSimAssocSumEm ) )  
+
             UnmatchedrHitsSumEoverEgen.append( eventUnmatchedrHitsSumEp / Egenp )
-            if not options.shootoneside: UnmatchedrHitsSumEoverEgen.append( eventUnmatchedrHitsSumEm / Egenm )
-            print ("Egen plus  ", Egenp, " GeV " , " Sum(E_i) ", eventrHitsSimAssocSumEp, " sum(E_i)/Egen ", (eventrHitsSimAssocSumEp / Egenp))
-            if not options.shootoneside: print ("Egen minus ", Egenm, " GeV " , " Sum(E_i) ", eventrHitsSimAssocSumEm, " sum(E_i)/Egen ", (eventrHitsSimAssocSumEm / Egenm))
-            print ("Unmatched Egen plus  ", Egenp, " GeV " , " Sum(E_i) ", eventUnmatchedrHitsSumEp, " sum(E_i)/Egen ", (eventUnmatchedrHitsSumEp / Egenp))
-            if not options.shootoneside: print ("Unmatched Egen minus ", Egenm, " GeV " , " Sum(E_i) ", eventUnmatchedrHitsSumEm, " sum(E_i)/Egen ", (eventUnmatchedrHitsSumEm / Egenm))
+            UnmatchedrHitsSimAssocSumE_fineoverSumE_vs_SumEoverEgen.append( (eventUnmatchedrHitsSumEp / Egenp , eventUnmatchedrHitsSumEp_fine / eventUnmatchedrHitsSumEp))
+            if not options.shootoneside: 
+                UnmatchedrHitsSumEoverEgen.append( eventUnmatchedrHitsSumEm / Egenm )
+                UnmatchedrHitsSimAssocSumE_fineoverSumE_vs_SumEoverEgen.append( (eventUnmatchedrHitsSumEm / Egenm , eventUnmatchedrHitsSumEm_fine / eventUnmatchedrHitsSumEm))
+
+
+            print ("Egen plus  ", Egenp, " GeV " , " Sum(E_i) ", eventrHitsSimAssocSumEp, " sum(E_i)/Egen ", (eventrHitsSimAssocSumEp / Egenp), " fine fraction " , eventrHitsSimAssocSumEp_fine / eventrHitsSimAssocSumEp)
+            if not options.shootoneside: print ("Egen minus ", Egenm, " GeV " , " Sum(E_i) ", eventrHitsSimAssocSumEm, " sum(E_i)/Egen ", (eventrHitsSimAssocSumEm / Egenm), " fine fraction " , eventrHitsSimAssocSumEm_fine / eventrHitsSimAssocSumEm)
+            print ("Unmatched Egen plus  ", Egenp, " GeV " , " Sum(E_i) ", eventUnmatchedrHitsSumEp, " sum(E_i)/Egen ", (eventUnmatchedrHitsSumEp / Egenp), " fine fraction ", eventUnmatchedrHitsSumEp_fine / eventUnmatchedrHitsSumEp)
+            if not options.shootoneside: print ("Unmatched Egen minus ", Egenm, " GeV " , " Sum(E_i) ", eventUnmatchedrHitsSumEm, " sum(E_i)/Egen ", (eventUnmatchedrHitsSumEm / Egenm), " fine fraction ", eventUnmatchedrHitsSumEm_fine / eventUnmatchedrHitsSumEm)
 
         # histograms
         histDict = histValue1D(rHitsSimAssocSumEoverEgen, histDict, tag = "SumEoverEgen", title = "Reconstructed hits energy over generated energy",   axunit = "#sum E_{i}/E_{gen}",    binsBoundariesX = [400, 0, 2], ayunit = "N(events)", verbosityLevel=options.verbosityLevel)
@@ -546,6 +582,9 @@ def main():
         histDict = histValues2D(RechitRvsEta, histDict, tag = "RvsEta", title = "R vs Eta", axunit = "|#eta|", binsBoundariesX = EtaBoundariesShower, ayunit = "R (cm)", binsBoundariesY=[100, 0., 300.], weighted2D=False, verbosityLevel=options.verbosityLevel)
         histDict = histValues2D(RechitRvsLayer, histDict, tag = "RvsLayer", title = "R vs Layer", axunit = "Layer", binsBoundariesX = [53, 0., 53.], ayunit = "R (cm)", binsBoundariesY=[100, 0., 300.], weighted2D=False, verbosityLevel=options.verbosityLevel)
 
+        #Fine fraction
+        histDict = histValues2D(rHitsSimAssocSumE_fineoverSumE_vs_SumEoverEgen, histDict, tag = "SumE_fineoverSumEvsSumEoverEgen", title = "Fine Fraction", axunit = "#sum E_{i}/E_{gen}", binsBoundariesX = [400, 0, 2], ayunit = "#sum E_{i,fine}/#sum E_{i}", binsBoundariesY=[100, 0., 1.], weighted2D=False, verbosityLevel=options.verbosityLevel)
+        histDict = histValues2D(UnmatchedrHitsSimAssocSumE_fineoverSumE_vs_SumEoverEgen, histDict, tag = "UnmatchedSumE_fineoverSumEvsSumEoverEgen", title = "Unmatched fine fraction", axunit = "#sum E_{i}/E_{gen}", binsBoundariesX = [400, 0, 2], ayunit = "#sum E_{i,fine}/#sum E_{i}", binsBoundariesY=[100, 0., 1.], weighted2D=False, verbosityLevel=options.verbosityLevel)
 
         #Checking hit thicknesses
         histDict = histValue1D(rHitthick120, histDict, tag = "rHitthick120", title = "Matched reconstructed hits 120 #{mu}m",   axunit = "#hits in 120 #{mu}m",    binsBoundariesX = [2, 0, 2], ayunit = "N(hits)", verbosityLevel=options.verbosityLevel)

@@ -20,7 +20,9 @@
 #setenv thicknesses "CE_E_Front_300um CE_H_Coarse_300um CE_H_Coarse_Scint CE_H_Fine_120um CE_H_Fine_200um CE_H_Fine_300um"
 #setenv thicknesses "CE_E_Front_300um CE_H_Coarse_300um CE_H_Coarse_Scint CE_H_Fine_120um"
 #setenv thicknesses "CE_H_Coarse_Scint"
-setenv thicknesses "CE_H_Fine_Scint"
+#setenv thicknesses "CE_H_Fine_Scint"
+#setenv thicknesses "CE_H_Fine_Scint_Var1 CE_H_Fine_Scint_Var2 CE_H_Coarse_Scint_Var1 CE_H_Coarse_Scint_Var2"
+setenv thicknesses "CE_H_Fine_Scint CE_H_Fine_Scint_Var1 CE_H_Fine_Scint_Var2"
 #setenv thicknesses "CE_H_Fine_200um CE_H_Fine_300um"
 #setenv thicknesses "CE_E_Front_120um CE_E_Front_200um"
 #setenv thicknesses "eta1p6 eta2p0"  # 300, 200
@@ -53,7 +55,7 @@ set jobsperclusterchoice=10
 setenv eospath "/eos/cms/store/user/apsallid/HGCal/Validation/Photons"
 setenv targetdirs "CloseByParticleGunProducer_apsallid_PDGId22_nPart1_E60_eta1p4to4p0"
 #The delta 2.5 is dummy. We do not shoot two particles. 
-setenv date "Delta_2p5_20190924"
+setenv date "Delta_2p5_20191007"
 
 setenv PWD `pwd`
 
@@ -77,7 +79,7 @@ endif
 setenv filelistpath "${eospath}/${targetdirs}_${thick}_${date}/NTUP"
 #setenv filelistpath "${eospath}/${targetdirs}_${thick}_${date}/NTUP_THICKNESS1"
 
-if ( ${thick} == "CE_H_Coarse_Scint" || ${thick} == "CE_H_Fine_Scint" ) then
+if ( ${thick} == "CE_H_Coarse_Scint" || ${thick} == "CE_H_Fine_Scint" || ${thick} == "CE_H_Fine_Scint_Var1" || ${thick} == "CE_H_Fine_Scint_Var2" || ${thick} == "CE_H_Coarse_Scint_Var1" || ${thick} == "CE_H_Coarse_Scint_Var2" ) then
 setenv thicknum "-1"
 endif
 
