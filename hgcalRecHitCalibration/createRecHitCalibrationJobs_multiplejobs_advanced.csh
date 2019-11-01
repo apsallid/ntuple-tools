@@ -22,9 +22,14 @@
 #setenv thicknesses "CE_H_Coarse_Scint"
 #setenv thicknesses "CE_H_Fine_Scint"
 #setenv thicknesses "CE_H_Fine_Scint_Var1 CE_H_Fine_Scint_Var2 CE_H_Coarse_Scint_Var1 CE_H_Coarse_Scint_Var2"
-setenv thicknesses "CE_H_Fine_Scint CE_H_Fine_Scint_Var1 CE_H_Fine_Scint_Var2"
 #setenv thicknesses "CE_H_Fine_200um CE_H_Fine_300um"
-#setenv thicknesses "CE_E_Front_120um CE_E_Front_200um"
+#---------------
+#setenv thicknesses "CE_E_Front_120um CE_E_Front_200um CE_E_Front_300um"
+#setenv thicknesses "CE_H_Fine_120um CE_H_Fine_200um CE_H_Fine_300um"
+#setenv thicknesses "CE_H_Coarse_Scint CE_H_Coarse_Scint_Var1 CE_H_Coarse_Scint_Var2"
+setenv thicknesses "CE_H_Coarse_Scint_4285 CE_H_Coarse_Scint_4295 CE_H_Coarse_Scint_4305 CE_H_Coarse_Scint_4315 CE_H_Coarse_Scint_4325 CE_H_Coarse_Scint_4335 CE_H_Coarse_Scint_4345 CE_H_Coarse_Scint_4354 CE_H_Coarse_Scint_4364" 
+#setenv thicknesses "CE_H_Fine_Scint CE_H_Fine_Scint_Var1 CE_H_Fine_Scint_Var2"
+#---------------
 #setenv thicknesses "eta1p6 eta2p0"  # 300, 200
 #setenv thicknesses "eta2p0"
 #setenv thicknesses "eta2p5" # 120
@@ -55,7 +60,8 @@ set jobsperclusterchoice=10
 setenv eospath "/eos/cms/store/user/apsallid/HGCal/Validation/Photons"
 setenv targetdirs "CloseByParticleGunProducer_apsallid_PDGId22_nPart1_E60_eta1p4to4p0"
 #The delta 2.5 is dummy. We do not shoot two particles. 
-setenv date "Delta_2p5_20191007"
+#setenv date "Delta_2p5_20191007"
+setenv date "Delta_2p5_20191101" #CE_H_Coarse_Scint_Var1 CE_H_Coarse_Scint_Var2
 
 setenv PWD `pwd`
 
@@ -79,9 +85,11 @@ endif
 setenv filelistpath "${eospath}/${targetdirs}_${thick}_${date}/NTUP"
 #setenv filelistpath "${eospath}/${targetdirs}_${thick}_${date}/NTUP_THICKNESS1"
 
-if ( ${thick} == "CE_H_Coarse_Scint" || ${thick} == "CE_H_Fine_Scint" || ${thick} == "CE_H_Fine_Scint_Var1" || ${thick} == "CE_H_Fine_Scint_Var2" || ${thick} == "CE_H_Coarse_Scint_Var1" || ${thick} == "CE_H_Coarse_Scint_Var2" ) then
+if ( ${thick} == "CE_H_Coarse_Scint" || ${thick} == "CE_H_Fine_Scint" || ${thick} == "CE_H_Fine_Scint_Var1" || ${thick} == "CE_H_Fine_Scint_Var2" || ${thick} == "CE_H_Coarse_Scint_Var1" || ${thick} == "CE_H_Coarse_Scint_Var2" || ${thick} == "CE_H_Coarse_Scint_4285" || ${thick} == "CE_H_Coarse_Scint_4295" || ${thick} == "CE_H_Coarse_Scint_4305" || ${thick} == "CE_H_Coarse_Scint_4315" || ${thick} == "CE_H_Coarse_Scint_4325" || ${thick} == "CE_H_Coarse_Scint_4335" || ${thick} == "CE_H_Coarse_Scint_4345" || ${thick} == "CE_H_Coarse_Scint_4354" || ${thick} == "CE_H_Coarse_Scint_4364") then
 setenv thicknum "-1"
 endif
+
+
 
 foreach ncut  ($noisecuts)
 echo "------------------------"

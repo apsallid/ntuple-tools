@@ -3,7 +3,7 @@
 #cd /afs/cern.ch/work/a/apsallid/CMS/PFCalStudies/CMS-HGCAL/calib/CMSSW_10_3_0_pre4/src
 #cd /afs/cern.ch/work/a/apsallid/CMS/PFCalStudies/CMS-HGCAL/calib/CMSSW_10_3_0_pre5/src
 #cd /afs/cern.ch/work/a/apsallid/CMS/PFCalStudies/CMS-HGCAL/hitcalibrationV11/fcpermip/CMSSW_11_0_X_2019-09-23-2300/src
-cd /afs/cern.ch/work/a/apsallid/CMS/PFCalStudies/CMS-HGCAL/hitcalibrationV11/fcpermip/CMSSW_11_0_X_2019-10-04-2300/src
+cd /afs/cern.ch/work/a/apsallid/CMS/PFCalStudies/CMS-HGCAL/hitcalibrationV11/fcpermip/CMSSW_11_0_X_2019-10-24-1100/src/
 eval `scramv1 runtime -csh`
 cd -
 
@@ -20,8 +20,9 @@ setenv MODE "True"
 #setenv thicknesses "CE_E_Front_120um CE_E_Front_200um CE_E_Front_300um CE_H_Coarse_300um CE_H_Coarse_Scint CE_H_Fine_120um CE_H_Fine_200um CE_H_Fine_300um"
 #setenv thicknesses "CE_H_Coarse_Scint"
 #setenv thicknesses "CE_H_Fine_Scint"
-#setenv thicknesses "CE_H_Fine_Scint_Var1 CE_H_Fine_Scint_Var2 CE_H_Coarse_Scint_Var1 CE_H_Coarse_Scint_Var2"
-setenv thicknesses "CE_H_Fine_Scint CE_H_Fine_Scint_Var1 CE_H_Fine_Scint_Var2"
+setenv thicknesses "CE_H_Coarse_Scint_4285 CE_H_Coarse_Scint_4295 CE_H_Coarse_Scint_4305 CE_H_Coarse_Scint_4315 CE_H_Coarse_Scint_4325 CE_H_Coarse_Scint_4335 CE_H_Coarse_Scint_4345 CE_H_Coarse_Scint_4354 CE_H_Coarse_Scint_4364" 
+#setenv thicknesses "CE_H_Coarse_Scint CE_H_Coarse_Scint_Var1 CE_H_Coarse_Scint_Var2"
+#setenv thicknesses "CE_H_Fine_Scint CE_H_Fine_Scint_Var1 CE_H_Fine_Scint_Var2"
 #setenv thicknesses "CE_E_Front_300um CE_H_Coarse_300um CE_H_Coarse_Scint CE_H_Fine_120um"
 #setenv thicknesses "CE_E_Front_120um CE_E_Front_200um"
 #setenv thicknesses "Scint_R180_Z430 Scint_R80_Z430"
@@ -59,7 +60,7 @@ if ( ${thick} == "eta2p5" || ${thick} == "CE_E_Front_120um"  || ${thick} == "CE_
 setenv thicknum "120"
 endif
 
-if ( ${thick} == "CE_H_Coarse_Scint" || ${thick} == "CE_H_Fine_Scint" || ${thick} == "CE_H_Fine_Scint_Var1" || ${thick} == "CE_H_Fine_Scint_Var2" || ${thick} == "CE_H_Coarse_Scint_Var1" || ${thick} == "CE_H_Coarse_Scint_Var2" ) then
+if ( ${thick} == "CE_H_Coarse_Scint" || ${thick} == "CE_H_Fine_Scint" || ${thick} == "CE_H_Fine_Scint_Var1" || ${thick} == "CE_H_Fine_Scint_Var2" || ${thick} == "CE_H_Coarse_Scint_Var1" || ${thick} == "CE_H_Coarse_Scint_Var2" || ${thick} == "CE_H_Coarse_Scint_4285" || ${thick} == "CE_H_Coarse_Scint_4295" || ${thick} == "CE_H_Coarse_Scint_4305" || ${thick} == "CE_H_Coarse_Scint_4315" || ${thick} == "CE_H_Coarse_Scint_4325" || ${thick} == "CE_H_Coarse_Scint_4335" || ${thick} == "CE_H_Coarse_Scint_4345" || ${thick} == "CE_H_Coarse_Scint_4354" || ${thick} == "CE_H_Coarse_Scint_4364") then
 setenv thicknum "-1"
 endif
 

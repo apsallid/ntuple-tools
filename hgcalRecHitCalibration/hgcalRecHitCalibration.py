@@ -357,7 +357,7 @@ def main():
 	eratioboundaries = [0.90 , 1.5]
     if options.region in ["CE_E_Front_120um","eta2p5"]: 
         eratioboundaries = [0.8 , 1.3]#[0.85 , 1.15]#[0.6 , 0.9][0.85 , 1.15]
-    if options.region in ["CE_H_Coarse_Scint","CE_H_Fine_Scint","CE_H_Fine_Scint_Var1","CE_H_Fine_Scint_Var2","CE_H_Coarse_Scint_Var1","CE_H_Coarse_Scint_Var2"]: 
+    if options.region in ["CE_H_Coarse_Scint","CE_H_Fine_Scint","CE_H_Fine_Scint_Var1","CE_H_Fine_Scint_Var2","CE_H_Coarse_Scint_Var1","CE_H_Coarse_Scint_Var2","CE_H_Coarse_Scint_4285","CE_H_Coarse_Scint_4295","CE_H_Coarse_Scint_4305","CE_H_Coarse_Scint_4315","CE_H_Coarse_Scint_4325","CE_H_Coarse_Scint_4335","CE_H_Coarse_Scint_4345","CE_H_Coarse_Scint_4354","CE_H_Coarse_Scint_4364"]: 
         eratioboundaries = [0.45 , 1.50]#[0.45 , 0.95]#[0.85 , 1.15]#[0.6 , 1.0]
 
     print (eratioboundaries)
@@ -611,6 +611,7 @@ def main():
         #The "geometry" 2D hit maps
         RvsEtavsThickness = finalmergedfile.Get("RvsEtavsThickness")
         RvsLayervsThickness = finalmergedfile.Get("RvsLayervsThickness")
+        finefraction = finalmergedfile.Get("SumE_fineoverSumEvsSumEoverEgen")
 
         RvsEta = finalmergedfile.Get("RvsEta")
         RvsLayer = finalmergedfile.Get("RvsLayer")
@@ -808,6 +809,37 @@ def main():
 
         mycE4.SaveAs("%s/P22E60_RvsLayer_thick%s_ecut%d.png"%(outDir,options.region,options.ecut))
         mycE4.Write()
+
+        #----------------------------------------------------------
+        #Fine fraction
+        mycE5 = ROOT.TCanvas("P22E60_Fine_fraction_thick%s_ecut%d"%(options.region,options.ecut), "P22E60_Fine_fraction_thick%s_ecut%d"%(options.region,options.ecut), 500, 500)
+
+        acustompalette()
+        ex1 = ROOT.TExec("ex1","acustompalette();");
+        ex1.Draw();
+
+        finefraction.Draw("COLZ")
+        mycE5.SetLeftMargin(0.12)
+        finefraction.GetXaxis().SetTitleOffset(1.31)
+        #finefraction.GetXaxis().SetRangeUser(0.5,1.0);
+        #finefraction.GetYaxis().SetRangeUser(0.4,1.0);
+        mycE5.Update()
+
+        palette = RvsLayer.GetListOfFunctions().FindObject("palette")
+        if palette:
+            palette.__class__ = ROOT.TPaletteAxis
+            palette.SetX1NDC(0.85)
+            palette.SetX2NDC(0.9)
+            #palette.SetY1NDC(0.1)
+            #palette.SetY2NDC(0.6)
+            palette.GetAxis().SetTickSize(.01)
+            palette.GetAxis().SetTitle("Si thick")
+            palette.GetAxis().SetTitleOffset(0.8);
+            #palette.GetAxis().LabelsOption("v")
+            ROOT.gPad.Update()
+
+        mycE5.SaveAs("%s/P22E60_Fine_fraction_thick%s_ecut%d.png"%(outDir,options.region,options.ecut))
+        mycE5.Write()
 
         #finaloutput.Close()
         
